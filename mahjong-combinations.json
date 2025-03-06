@@ -1,0 +1,775 @@
+{
+    "winningCombinations": [
+        {
+            "name": "Basic Winning Hand",
+            "chineseName": "胡牌",
+            "pronunciation": "Hú Pái",
+            "points": 1,
+            "description": "A valid hand of 14 tiles, including a pair and four sets of triplets/sequences.",
+            "validPatterns": [
+                "4 sets (any combination of triplets and sequences) + 1 pair",
+                "Each set must be either a triplet (3 identical tiles) or a sequence (3 consecutive numbers in the same suit)",
+                "The pair must be 2 identical tiles",
+                "Total of exactly 14 tiles (or more if Kongs are present, since each Kong requires an extra tile)"
+            ],
+            "strategy": [
+                "This is the fundamental pattern required for any winning hand",
+                "Aim to complete sets early while maintaining flexibility",
+                "Keep track of discarded tiles to avoid waiting for tiles that are no longer available",
+                "Balance between sequences (easier to form) and triplets (useful for other winning combinations)"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀈🀉", "🀙🀙🀙", "🀡🀡🀡", "🀂🀂🀂", "🀄🀄" ],
+                    "explanation": "Four sets (one sequence, three triplets) and a pair of Red Dragons"
+                },
+                {
+                    "tiles": [ "🀐🀑🀒", "🀓🀔🀕", "🀖🀗🀘", "🀀🀀🀀", "🀅🀅" ],
+                    "explanation": "Four sets (three sequences, one triplet) and a pair of Green Dragons"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇", "🀊🀊🀊", "🀙🀙🀙", "🀡🀡🀡", "🀂🀂" ],
+                    "explanation": "Four triplets and a pair of West Winds"
+                },
+                {
+                    "tiles": [ "🀇🀈🀉", "🀉🀊🀋", "🀋🀌🀍", "🀍🀎🀏", "🀉🀉" ],
+                    "explanation": "Four sequences and a pair, all in the Character suit"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇", "🀙🀙🀙", "🀐🀐🀐", "🀖🀗🀘", "🀃🀃" ],
+                    "explanation": "Three triplets, one sequence, and a pair of North Winds"
+                }
+            ]
+        },
+        {
+            "name": "Self-draw",
+            "chineseName": "自摸",
+            "pronunciation": "Zì Mó",
+            "points": 1,
+            "description": "Winning by drawing the winning tile yourself instead of claiming a discard.",
+            "validPatterns": [
+                "Any valid winning hand where the final tile is drawn by yourself",
+                "Cannot be claimed from another player's discard",
+                "Applies to any pattern including special winning hands"
+            ],
+            "strategy": [
+                "Has the highest priority in claiming - if you self-draw a winning tile, you win regardless of other players' claims",
+                "All opponents pay you the full points if you win by self-draw",
+                "More patience is required since you're waiting for your specific tile to be drawn rather than claimed",
+                "Can be combined with other winning patterns for additional points"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀈🀉", "🀙🀙🀙", "🀡🀡🀡", "🀂🀂🀂", "🀄" ],
+                    "winningTile": "🀄",
+                    "explanation": "Player draws the Red Dragon to complete their pair"
+                },
+                {
+                    "tiles": [ "🀐🀑🀒", "🀓🀔🀕", "🀀🀀🀀", "🀅🀅🀅", "🀘" ],
+                    "winningTile": "🀘",
+                    "explanation": "Player draws the 9 of Bamboo to complete their pair"
+                },
+                {
+                    "tiles": [ "🀇🀈🀉", "🀐🀑🀒", "🀙🀚🀛", "🀂" ],
+                    "winningTile": "🀂",
+                    "explanation": "Player draws the West Wind to complete a sequence 🀂🀃🀄"
+                },
+                {
+                    "tiles": [ "🀇🀇", "🀐🀐🀐", "🀙🀙🀙", "🀂🀂🀂", "🀄🀄🀄" ],
+                    "winningTile": "🀇",
+                    "explanation": "Player draws a 1 of Characters to complete their pair"
+                }
+            ]
+        },
+        {
+            "name": "Winning on Last Tile",
+            "chineseName": "海底捞月",
+            "pronunciation": "Hǎi Dǐ Lāo Yuè",
+            "points": 1,
+            "description": "Winning by drawing or claiming the very last tile of the game.",
+            "validPatterns": [
+                "Any valid winning hand where the final tile is the very last tile in the wall",
+                "Can be either drawn by yourself or claimed from another player's discard",
+                "Compatible with any winning pattern"
+            ],
+            "strategy": [
+                "Keep track of how many tiles are left in the wall",
+                "The last tile is sometimes called the 'dead wall' tile",
+                "Can be combined with self-draw for additional points",
+                "Often a matter of luck rather than strategy"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀈🀉", "🀙🀙🀙", "🀡🀡🀡", "🀂🀂🀂", "🀄" ],
+                    "winningTile": "🀄",
+                    "explanation": "The last tile in the wall completes the hand with a pair of Red Dragons"
+                },
+                {
+                    "tiles": [ "🀙🀚🀛", "🀝🀝🀝", "🀀🀀🀀", "🀆🀆🀆", "🀃" ],
+                    "winningTile": "🀃",
+                    "explanation": "The last tile completes a pair of North Winds"
+                },
+                {
+                    "tiles": [ "🀇🀈", "🀊🀊🀊", "🀐🀐🀐", "🀙🀙🀙", "🀂🀂🀂" ],
+                    "winningTile": "🀉",
+                    "explanation": "The last tile completes a sequence of 1-2-3 of Characters"
+                }
+            ]
+        },
+        {
+            "name": "Robbing a Kong",
+            "chineseName": "抢杠胡",
+            "pronunciation": "Qiǎng Gàng Hú",
+            "points": 1,
+            "description": "Winning when an opponent declares a Kong (exposed) and you take their tile.",
+            "validPatterns": [
+                "When another player declares a Kong by adding a fourth tile to an exposed triplet",
+                "You can claim that fourth tile if it completes your winning hand",
+                "Only applies to exposed Kongs (where the player already has a revealed triplet)"
+            ],
+            "strategy": [
+                "You can only rob a Kong if it completes your winning hand",
+                "Has priority over regular discards but not over self-draw",
+                "The player declaring the Kong pays for all players if you win",
+                "Pay attention when a player has exposed triplets as they might try to Kong"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀈🀉", "🀙🀙🀙", "🀡🀡🀡", "🀂🀂", "🀄🀄" ],
+                    "winningTile": "🀂",
+                    "explanation": "Opponent declares Kong with 🀂🀂🀂 + 🀂, you claim the fourth 🀂 to complete your pair"
+                },
+                {
+                    "tiles": [ "🀐🀑🀒", "🀓🀔🀕", "🀖🀗", "🀀🀀🀀", "🀅🀅" ],
+                    "winningTile": "🀖",
+                    "explanation": "Opponent declares Kong with 🀖🀖🀖 + 🀖, you claim it to complete your sequence"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇", "🀙🀙🀙", "🀡🀡🀡", "🀄🀄", "🀀" ],
+                    "winningTile": "🀀",
+                    "explanation": "Opponent declares Kong with 🀀🀀🀀 + 🀀, you claim it to complete your pair"
+                }
+            ]
+        },
+        {
+            "name": "Flower/Season",
+            "chineseName": "花牌/季牌",
+            "pronunciation": "Huā Pái/Jì Pái",
+            "points": "1 per tile",
+            "description": "Each flower or season tile adds one point to your winning hand.",
+            "validPatterns": [
+                "Flowers are numbered 1-4: 🀢 (plum), 🀣 (orchid), 🀤 (chrysanthemum), 🀥 (bamboo)",
+                "Seasons are numbered 1-4: 🀦 (spring), 🀧 (summer), 🀨 (autumn), 🀩 (winter)",
+                "These are bonus tiles that don't form part of your main hand"
+            ],
+            "strategy": [
+                "Flower and season tiles are drawn and set aside immediately",
+                "You draw a replacement tile for each flower/season",
+                "Keep track of which flowers/seasons you have for scoring",
+                "Flowers and seasons add value to any winning hand"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀈🀉", "🀙🀙🀙", "🀡🀡🀡", "🀂🀂🀂", "🀄🀄" ],
+                    "bonusTiles": [ "🀢", "🀣", "🀤" ],
+                    "explanation": "Basic winning hand plus three flower tiles = 3 extra points"
+                },
+                {
+                    "tiles": [ "🀐🀑🀒", "🀓🀔🀕", "🀀🀀🀀", "🀅🀅🀅", "🀘🀘" ],
+                    "bonusTiles": [ "🀦", "🀧" ],
+                    "explanation": "Basic winning hand plus two season tiles = 2 extra points"
+                },
+                {
+                    "tiles": [ "🀇🀈🀉", "🀙🀙🀙", "🀡🀡🀡", "🀂🀂🀂", "🀄🀄" ],
+                    "bonusTiles": [ "🀢", "🀣", "🀤", "🀥", "🀦", "🀧", "🀨", "🀩" ],
+                    "explanation": "Basic winning hand with all flowers and seasons = 8 extra points"
+                }
+            ]
+        },
+        {
+            "name": "Seat Flower/Season",
+            "chineseName": "自家花/季牌",
+            "pronunciation": "Zì Jiā Huā/Jì Pái",
+            "points": 2,
+            "description": "Flower or season tile matching your seat wind (East, South, West, North).",
+            "validPatterns": [
+                "East seat matches flower 1 (🀢) and season 1 (🀦)",
+                "South seat matches flower 2 (🀣) and season 2 (🀧)",
+                "West seat matches flower 3 (🀤) and season 3 (🀨)",
+                "North seat matches flower 4 (🀥) and season 4 (🀩)"
+            ],
+            "strategy": [
+                "Worth 2 points instead of the usual 1 point",
+                "Check the number on the flower/season tile against your seat position",
+                "The starting dealer is always East (position 1)",
+                "After each round, seat positions rotate counter-clockwise"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀈🀉", "🀙🀙🀙", "🀡🀡🀡", "🀂🀂🀂", "🀄🀄" ],
+                    "bonusTiles": [ "🀢" ],
+                    "explanation": "East seat player has the matching East flower = 2 points"
+                },
+                {
+                    "tiles": [ "🀐🀑🀒", "🀓🀔🀕", "🀀🀀🀀", "🀅🀅🀅", "🀘🀘" ],
+                    "bonusTiles": [ "🀦" ],
+                    "explanation": "East seat player has the matching East season = 2 points"
+                },
+                {
+                    "tiles": [ "🀇🀈🀉", "🀙🀙🀙", "🀡🀡🀡", "🀂🀂🀂", "🀄🀄" ],
+                    "bonusTiles": [ "🀣" ],
+                    "explanation": "South seat player has the matching South flower = 2 points"
+                },
+                {
+                    "tiles": [ "🀇🀈🀉", "🀙🀙🀙", "🀡🀡🀡", "🀂🀂🀂", "🀄🀄" ],
+                    "bonusTiles": [ "🀤", "🀨" ],
+                    "explanation": "West seat player has matching West flower and season = 4 points"
+                }
+            ]
+        },
+        {
+            "name": "Half Flush",
+            "chineseName": "混一色",
+            "pronunciation": "Hùn Yī Sè",
+            "points": 3,
+            "description": "All tiles are from one suit (Characters, Bamboos, or Dots) but include Honors.",
+            "validPatterns": [
+                "All numbered tiles must be from the same suit (Characters, Bamboo, or Dots)",
+                "Can include any number of Honor tiles (Winds and Dragons)",
+                "Must follow the basic structure of 4 sets and 1 pair"
+            ],
+            "strategy": [
+                "Decide early which suit to focus on and discard other suits",
+                "Honor tiles can help complete sets when you're missing suited tiles",
+                "Easier to achieve than Full Flush and still worth significant points",
+                "Watch other players' discards to see if your chosen suit is contested"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀙🀚🀛", "🀝🀝🀝", "🀜🀜🀜", "🀀🀀🀀", "🀃🀃" ],
+                    "explanation": "All Dots suit plus Wind (Honor) triplet and Dragon (Honor) pair"
+                },
+                {
+                    "tiles": [ "🀇🀈🀉", "🀊🀋🀌", "🀍🀍🀍", "🀄🀄🀄", "🀀🀀" ],
+                    "explanation": "All Characters suit plus Red Dragon triplet and East Wind pair"
+                },
+                {
+                    "tiles": [ "🀐🀑🀒", "🀓🀓🀓", "🀗🀗🀗", "🀁🀁🀁", "🀆🀆" ],
+                    "explanation": "All Bamboo suit plus South Wind triplet and White Dragon pair"
+                },
+                {
+                    "tiles": [ "🀇🀈🀉", "🀋🀌🀍", "🀀🀀🀀", "🀁🀁🀁", "🀄🀄" ],
+                    "explanation": "Characters suit with two sequences plus two Honor triplets"
+                }
+            ]
+        },
+        {
+            "name": "Full Flush",
+            "chineseName": "清一色",
+            "pronunciation": "Qīng Yī Sè",
+            "points": 6,
+            "description": "All tiles are from one suit (Characters, Bamboos, or Dots).",
+            "validPatterns": [
+                "All tiles must be from a single suit: Characters (🀇-🀏), Bamboo (🀐-🀘), or Dots (🀙-🀡)",
+                "No Honor tiles (Winds or Dragons) allowed",
+                "Must follow the basic structure of 4 sets and 1 pair"
+            ],
+            "strategy": [
+                "Worth double the points of Half Flush",
+                "Harder to complete because you're limited to just 9 different tiles",
+                "Start collecting a single suit from the beginning of the game",
+                "May need to compete with other players for the same tiles"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀈🀉", "🀊🀋🀌", "🀍🀎🀏", "🀉🀉🀉", "🀇🀇" ],
+                    "explanation": "All Character tiles with no Honors"
+                },
+                {
+                    "tiles": [ "🀐🀑🀒", "🀓🀔🀕", "🀖🀗🀘", "🀔🀔🀔", "🀐🀐" ],
+                    "explanation": "All Bamboo tiles with no Honors"
+                },
+                {
+                    "tiles": [ "🀙🀚🀛", "🀜🀝🀞", "🀟🀠🀡", "🀝🀝🀝", "🀙🀙" ],
+                    "explanation": "All Dots tiles with no Honors"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇", "🀊🀊🀊", "🀍🀍🀍", "🀏🀏🀏", "🀋🀋" ],
+                    "explanation": "Full Flush with all triplets (also counts as All Triplets)"
+                }
+            ]
+        },
+        {
+            "name": "All Triplets",
+            "chineseName": "对对胡",
+            "pronunciation": "Duì Duì Hú",
+            "points": 3,
+            "description": "A hand with only triplets/kongs and a pair, no sequences.",
+            "validPatterns": [
+                "Four sets that are all triplets or kongs (no sequences)",
+                "Plus one pair",
+                "Can be made with any combination of suits and honor tiles"
+            ],
+            "strategy": [
+                "Also known as 'All Pungs'",
+                "Focus on collecting pairs that can be developed into triplets",
+                "Claiming revealed triplets can help complete this hand faster",
+                "More difficult to achieve than hands with sequences but worth more points"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀇🀇", "🀙🀙🀙", "🀠🀠🀠", "🀂🀂🀂", "🀄🀄" ],
+                    "explanation": "Four triplets and one pair, no sequences"
+                },
+                {
+                    "tiles": [ "🀐🀐🀐", "🀕🀕🀕", "🀀🀀🀀", "🀅🀅🀅", "🀘🀘" ],
+                    "explanation": "Four triplets (including winds and dragons) and a pair"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇🀇", "🀙🀙🀙", "🀠🀠🀠", "🀂🀂🀂", "🀄🀄" ],
+                    "explanation": "Three triplets, one kong, and a pair"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇", "🀋🀋🀋", "🀏🀏🀏", "🀓🀓🀓", "🀘🀘" ],
+                    "explanation": "All triplets with mixed suits and no Honor tiles"
+                }
+            ]
+        },
+        {
+            "name": "Mixed Terminals",
+            "chineseName": "混幺九",
+            "pronunciation": "Hùn Yāo Jiǔ",
+            "points": 3,
+            "description": "Hand contains 1s, 9s, and Honor tiles but also has other numbers.",
+            "validPatterns": [
+                "Must include at least one set of terminal tiles (1s or 9s)",
+                "Must include at least one set of Honor tiles (Winds or Dragons)",
+                "Can include other numbered tiles (2-8) as well",
+                "Must follow the basic structure of 4 sets and 1 pair"
+            ],
+            "strategy": [
+                "Look for opportunities to collect terminal tiles throughout the game",
+                "Can be combined with All Triplets for a stronger hand",
+                "Honor tiles pair well with this strategy",
+                "Terminal tiles are less commonly used in sequences, making them easier to collect for triplets"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀇🀇", "🀏🀏🀏", "🀀🀀🀀", "🀃🀃🀃", "🀄🀄" ],
+                    "explanation": "Triplets of 1 Characters, 9 Characters, East Wind, North Wind, pair of Red Dragons"
+                },
+                {
+                    "tiles": [ "🀐🀐🀐", "🀘🀘🀘", "🀙🀙🀙", "🀡🀡🀡", "🀅🀅" ],
+                    "explanation": "Triplets of 1 Bamboo, 9 Bamboo, 1 Dot, 9 Dot, pair of Green Dragons"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇", "🀏🀏🀏", "🀚🀛🀜", "🀀🀀🀀", "🀄🀄" ],
+                    "explanation": "Triplets of 1s and 9s, a sequence of middle numbers, and Honor tiles"
+                }
+            ]
+        },
+        {
+            "name": "All Terminals and Honors",
+            "chineseName": "清幺九",
+            "pronunciation": "Qīng Yāo Jiǔ",
+            "points": 6,
+            "description": "Hand made up entirely of 1s, 9s, and Honor tiles.",
+            "validPatterns": [
+                "Every tile in the hand must be either a 1, 9, or honor tile",
+                "No middle number tiles (2-8) allowed",
+                "Must follow the basic structure of 4 sets and 1 pair",
+                "All sets must be triplets since sequences would require middle numbers"
+            ],
+            "strategy": [
+                "Worth double the points of Mixed Terminals",
+                "Very difficult to complete as you're limited to just 16 different tiles",
+                "Often results in slower hand development",
+                "Terminal tiles are less commonly discarded, increasing difficulty"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀇🀇", "🀏🀏🀏", "🀠🀠🀠", "🀀🀀🀀", "🀄🀄" ],
+                    "explanation": "Triplets of 1s, 9s, and Honor tiles only"
+                },
+                {
+                    "tiles": [ "🀐🀐🀐", "🀘🀘🀘", "🀁🀁🀁", "🀅🀅🀅", "🀡🀡" ],
+                    "explanation": "All terminal numbers (1s and 9s) and honor tiles"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇", "🀡🀡🀡", "🀀🀀🀀", "🀅🀅🀅", "🀃🀃" ],
+                    "explanation": "Terminals from two suits (1 Character, 9 Dot) plus Honor tiles"
+                }
+            ]
+        },
+        {
+            "name": "Little Dragon",
+            "chineseName": "小三元",
+            "pronunciation": "Xiǎo Sān Yuán",
+            "points": 4,
+            "description": "A hand containing two triplets of Dragon tiles and a pair of the third Dragon.",
+            "validPatterns": [
+                "Two triplets/kongs of dragon tiles: Red (🀄), Green (🀅), and White (🀆)",
+                "Plus a pair of the third dragon type",
+                "The remaining set can be anything",
+                "Must follow the basic structure of 4 sets and 1 pair"
+            ],
+            "strategy": [
+                "Focus on collecting all three types of dragon tiles",
+                "Dragons are often popular tiles so expect competition",
+                "Often easier to achieve than Big Dragon",
+                "The three dragon tiles are: Red Dragon (🀄), Green Dragon (🀅), and White Dragon (🀆)"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀈🀉", "🀄🀄🀄", "🀅🀅🀅", "🀂🀂🀂", "🀆🀆" ],
+                    "explanation": "One sequence, triplets of Red and Green Dragons, pair of White Dragon"
+                },
+                {
+                    "tiles": [ "🀙🀚🀛", "🀄🀄🀄", "🀆🀆🀆", "🀀🀀🀀", "🀅🀅" ],
+                    "explanation": "One sequence, triplets of Red and White Dragons, pair of Green Dragon"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇", "🀅🀅🀅", "🀆🀆🀆", "🀀🀀🀀", "🀄🀄" ],
+                    "explanation": "One Character triplet, two Dragon triplets, one Wind triplet, and Dragon pair"
+                }
+            ]
+        },
+        {
+            "name": "Big Dragon",
+            "chineseName": "大三元",
+            "pronunciation": "Dà Sān Yuán",
+            "points": 8,
+            "description": "A hand with all three Dragon triplets.",
+            "validPatterns": [
+                "Triplets/kongs of all three types of dragon tiles: Red (🀄), Green (🀅), and White (🀆)",
+                "The remaining set and pair can be anything",
+                "Must follow the basic structure of 4 sets and 1 pair"
+            ],
+            "strategy": [
+                "Worth double the points of Little Dragon",
+                "Very difficult as you need to collect all three dragon types in sets of three",
+                "Dragons are often popular tiles so expect competition",
+                "Consider revealing triplets to secure the dragons you've collected"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀈🀉", "🀄🀄🀄", "🀅🀅🀅", "🀆🀆🀆", "🀀🀀" ],
+                    "explanation": "One sequence, triplets of all three Dragons, and a pair of East Wind"
+                },
+                {
+                    "tiles": [ "🀐🀑🀒", "🀄🀄🀄", "🀅🀅🀅", "🀆🀆🀆", "🀁🀁" ],
+                    "explanation": "One sequence, triplets of Red, Green, and White Dragons, pair of South Wind"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇", "🀄🀄🀄", "🀅🀅🀅", "🀆🀆🀆", "🀃🀃" ],
+                    "explanation": "One Character triplet, three Dragon triplets, and a pair of North Wind"
+                }
+            ]
+        },
+        {
+            "name": "Small Winds",
+            "chineseName": "小四喜",
+            "pronunciation": "Xiǎo Sì Xǐ",
+            "points": 8,
+            "description": "A hand with three triplets of Wind tiles and a pair of the fourth Wind.",
+            "validPatterns": [
+                "Three triplets/kongs of wind tiles: East (🀀), South (🀁), West (🀂), and North (🀃)",
+                "Plus a pair of the fourth wind type",
+                "The remaining set can be anything",
+                "Must follow the basic structure of 4 sets and 1 pair"
+            ],
+            "strategy": [
+                "Focus on collecting all four types of wind tiles",
+                "Seat winds or prevalent winds are easier to collect",
+                "Very high-scoring hand but difficult to achieve",
+                "Consider revealing triplets to secure the winds you've collected"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀙🀙🀙", "🀀🀀🀀", "🀁🀁🀁", "🀂🀂🀂", "🀃🀃" ],
+                    "explanation": "One triplet of Dots, triplets of East, South, and West Winds, pair of North Wind"
+                },
+                {
+                    "tiles": [ "🀐🀐🀐", "🀀🀀🀀", "🀁🀁🀁", "🀃🀃🀃", "🀂🀂" ],
+                    "explanation": "One triplet of Bamboo, triplets of East, South, and North Winds, pair of West Wind"
+                },
+                {
+                    "tiles": [ "🀄🀄🀄", "🀀🀀🀀", "🀁🀁🀁", "🀂🀂🀂", "🀃🀃" ],
+                    "explanation": "One Dragon triplet and three Wind triplets with the fourth Wind as a pair"
+                }
+            ]
+        },
+        {
+            "name": "Big Winds",
+            "chineseName": "大四喜",
+            "pronunciation": "Dà Sì Xǐ",
+            "points": 16,
+            "description": "A hand with all four Wind triplets.",
+            "validPatterns": [
+                "Triplets/kongs of all four types of wind tiles: East (🀀), South (🀁), West (🀂), and North (🀃)",
+                "The remaining pair can be anything",
+                "Must follow the basic structure of 4 sets and 1 pair"
+            ],
+            "strategy": [
+                "One of the highest scoring hands in the game",
+                "Extremely difficult to complete",
+                "Winds are often popular tiles so expect competition",
+                "Consider revealing triplets to secure the winds you've collected"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀀🀀🀀", "🀁🀁🀁", "🀂🀂🀂", "🀃🀃🀃", "🀄🀄" ],
+                    "explanation": "Triplets of all four Winds plus a pair of Red Dragons"
+                },
+                {
+                    "tiles": [ "🀀🀀🀀", "🀁🀁🀁", "🀂🀂🀂", "🀃🀃🀃", "🀆🀆" ],
+                    "explanation": "Triplets of East, South, West and North Winds plus a pair of White Dragons"
+                },
+                {
+                    "tiles": [ "🀀🀀🀀", "🀁🀁🀁", "🀂🀂🀂", "🀃🀃🀃", "🀅🀅" ],
+                    "explanation": "All four Wind triplets with a pair of Green Dragons"
+                }
+            ]
+        },
+        {
+            "name": "Four Kongs",
+            "chineseName": "四杠子",
+            "pronunciation": "Sì Gàng Zi",
+            "points": 16,
+            "description": "A hand with four Kongs (exposed or concealed).",
+            "validPatterns": [
+                "Four kongs (sets of 4 identical tiles)",
+                "Plus any pair",
+                "Kongs can be exposed or concealed",
+                "Requires a total of 18 tiles due to the extra tiles from kongs"
+            ],
+            "strategy": [
+                "One of the highest scoring hands in the game",
+                "You need a total of 18 tiles due to the extra tiles drawn after declaring kongs",
+                "Remember to declare your kongs to draw replacement tiles",
+                "Very rare and requires exceptional luck with the draw"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀇🀇🀇", "🀙🀙🀙🀙", "🀠🀠🀠🀠", "🀂🀂🀂🀂", "🀄🀄" ],
+                    "explanation": "Four Kongs plus a pair of Red Dragons"
+                },
+                {
+                    "tiles": [ "🀐🀐🀐🀐", "🀕🀕🀕🀕", "🀀🀀🀀🀀", "🀅🀅🀅🀅", "🀘🀘" ],
+                    "explanation": "Four Kongs including character, bamboo, wind and dragon tiles"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇🀇", "🀊🀊🀊🀊", "🀍🀍🀍🀍", "🀏🀏🀏🀏", "🀄🀄" ],
+                    "explanation": "Four Kongs all from the Character suit with a pair of Red Dragons"
+                }
+            ]
+        },
+        {
+            "name": "Thirteen Orphans",
+            "chineseName": "十三幺",
+            "pronunciation": "Shí Sān Yāo",
+            "points": 8,
+            "description": "A hand with one of each of the 1s, 9s, Winds, and Dragons, plus a duplicate.",
+            "validPatterns": [
+                "One of each of: 1 and 9 of each suit, all four winds, all three dragons",
+                "Plus a duplicate of any one of these tiles",
+                "Exactly 14 tiles with a very specific structure",
+                "Does not follow the usual '4 sets + 1 pair' structure"
+            ],
+            "strategy": [
+                "A completely different pattern from the usual '4 sets + 1 pair' structure",
+                "Has special claiming priority in many rule sets",
+                "Focus on collecting single terminals and honors, avoid pairs (except one)",
+                "Extremely difficult to complete but has an impressive visual pattern"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇", "🀏", "🀐", "🀘", "🀙", "🀡", "🀀", "🀁", "🀂", "🀃", "🀄", "🀅", "🀆", "🀇" ],
+                    "explanation": "One of each terminal and honor tile, plus a duplicate 1 of Characters"
+                },
+                {
+                    "tiles": [ "🀇", "🀏", "🀐", "🀘", "🀙", "🀡", "🀀", "🀁", "🀂", "🀃", "🀄", "🀅", "🀆", "🀆" ],
+                    "explanation": "One of each terminal and honor tile, plus a duplicate White Dragon"
+                },
+                {
+                    "tiles": [ "🀇", "🀏", "🀐", "🀘", "🀙", "🀡", "🀀", "🀁", "🀂", "🀃", "🀄", "🀅", "🀆", "🀃" ],
+                    "explanation": "One of each terminal and honor tile, plus a duplicate North Wind"
+                }
+            ]
+        },
+        {
+            "name": "Heavenly Hand",
+            "chineseName": "天胡",
+            "pronunciation": "Tiān Hú",
+            "points": 8,
+            "description": "Winning immediately with the dealer's initial hand plus first draw.",
+            "validPatterns": [
+                "The dealer's initial 13 tiles plus first draw form a complete winning hand",
+                "Must be achieved without any discards",
+                "Can be any valid winning pattern"
+            ],
+            "strategy": [
+                "Extremely rare and lucky - impossible to plan for",
+                "The dealer must win on their very first turn",
+                "Often gets double points in many rule sets",
+                "No strategy exists - it's pure luck!"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀈🀉", "🀙🀙🀙", "🀡🀡🀡", "🀂🀂🀂", "🀄" ],
+                    "winningTile": "🀄",
+                    "explanation": "Dealer's initial hand is one tile away from winning, and they draw the winning tile"
+                },
+                {
+                    "tiles": [ "🀐🀑🀒", "🀓🀔🀕", "🀀🀀🀀", "🀅🀅🀅", "🀘" ],
+                    "winningTile": "🀘",
+                    "explanation": "Dealer draws their first tile to complete the winning hand"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇", "🀊🀊🀊", "🀐🀐🀐", "🀡🀡🀡", "🀀" ],
+                    "winningTile": "🀀",
+                    "explanation": "Dealer draws an East Wind to complete the pair on their first turn"
+                }
+            ]
+        },
+        {
+            "name": "Earthly Hand",
+            "chineseName": "地胡",
+            "pronunciation": "Dì Hú",
+            "points": 8,
+            "description": "Non-dealer wins with their initial hand after dealer's first discard.",
+            "validPatterns": [
+                "A non-dealer wins with their initial 13 tiles plus the dealer's first discard",
+                "Must be achieved on the very first discard of the game",
+                "Can be any valid winning pattern"
+            ],
+            "strategy": [
+                "Extremely rare and lucky - impossible to plan for",
+                "Must win on the very first discard of the game",
+                "Often gets double points in many rule sets",
+                "No strategy exists - it's pure luck!"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀈🀉", "🀙🀙🀙", "🀡🀡🀡", "🀂🀂🀂", "🀄" ],
+                    "winningTile": "🀄",
+                    "explanation": "Non-dealer's initial hand is one tile away from winning, and dealer's first discard is their winning tile"
+                },
+                {
+                    "tiles": [ "🀐🀑🀒", "🀓🀔🀕", "🀀🀀🀀", "🀅🀅🀅", "🀘" ],
+                    "winningTile": "🀘",
+                    "explanation": "Player wins on the very first discard of the game"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇", "🀊🀊🀊", "🀐🀐🀐", "🀙🀙🀙", "🀂" ],
+                    "winningTile": "🀂",
+                    "explanation": "Player needs a West Wind to complete their pair and dealer discards it first"
+                }
+            ]
+        },
+        {
+            "name": "Fully Concealed Hand",
+            "chineseName": "门清自摸",
+            "pronunciation": "Mén Qīng Zì Mó",
+            "points": 2,
+            "description": "Winning with a self-drawn hand that was never exposed (no revealed sets).",
+            "validPatterns": [
+                "Winning with a hand where all sets are concealed (no claimed tiles)",
+                "Must be won with a self-drawn tile",
+                "Regular '4 sets + 1 pair' structure but all concealed"
+            ],
+            "strategy": [
+                "Keep your hand completely concealed throughout the game",
+                "Patient strategy that can be combined with other patterns",
+                "Avoid the temptation to claim exposed sets",
+                "More flexible as you can change your hand direction throughout the game"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀈🀉", "🀙🀙🀙", "🀡🀡🀡", "🀂🀂🀂", "🀄" ],
+                    "winningTile": "🀄",
+                    "explanation": "All sets are concealed, and the winning tile is self-drawn"
+                },
+                {
+                    "tiles": [ "🀐🀑🀒", "🀓🀔🀕", "🀀🀀🀀", "🀅🀅🀅", "🀘" ],
+                    "winningTile": "🀘",
+                    "explanation": "Player keeps their entire hand concealed and wins by self-draw"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇", "🀊🀊🀊", "🀐🀐🀐", "🀙🀙🀙", "🀂" ],
+                    "winningTile": "🀂",
+                    "explanation": "Four concealed triplets and a self-drawn pair completion"
+                }
+            ]
+        },
+        {
+            "name": "Quadruple Concealed Triplets",
+            "chineseName": "四暗刻",
+            "pronunciation": "Sì Àn Kè",
+            "points": 8,
+            "description": "Having four concealed triplets (no revealed sets).",
+            "validPatterns": [
+                "Four concealed triplets/kongs (no claimed sets)",
+                "Plus any pair",
+                "All triplets must be formed without claiming",
+                "Must follow the basic structure of 4 sets and 1 pair"
+            ],
+            "strategy": [
+                "Very difficult hand that requires patience",
+                "Can be combined with Fully Concealed Hand for more points",
+                "Look for opportunities to build multiple pairs into triplets",
+                "Avoid revealing any sets even if tempting"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀇🀇🀇", "🀙🀙🀙", "🀡🀡🀡", "🀂🀂🀂", "🀄" ],
+                    "winningTile": "🀄",
+                    "explanation": "All four triplets remain concealed, pair completed by drawing or claiming"
+                },
+                {
+                    "tiles": [ "🀐🀐🀐", "🀕🀕🀕", "🀀🀀🀀", "🀅🀅🀅", "🀘" ],
+                    "winningTile": "🀘",
+                    "explanation": "Four concealed triplets without any exposed sets"
+                },
+                {
+                    "tiles": [ "🀇🀇🀇", "🀊🀊🀊", "🀏🀏🀏", "🀀🀀🀀", "🀅" ],
+                    "winningTile": "🀅",
+                    "explanation": "Four concealed triplets with a Green Dragon as the final pair completion"
+                }
+            ]
+        },
+        {
+            "name": "All Honors",
+            "chineseName": "字一色",
+            "pronunciation": "Zì Yī Sè",
+            "points": 8,
+            "description": "A hand consisting only of Wind and Dragon tiles.",
+            "validPatterns": [
+                "Every tile in the hand is an honor tile (winds or dragons)",
+                "No suit tiles allowed",
+                "Regular '4 sets + 1 pair' structure",
+                "Limited to just 7 different tile types"
+            ],
+            "strategy": [
+                "Limited to just 7 different tile types",
+                "Often difficult as many players need some honor tiles",
+                "Watch your opponents' discards carefully to assess feasibility",
+                "Best combined with All Triplets since sequences are impossible with honors"
+            ],
+            "examples": [
+                {
+                    "tiles": [ "🀀🀀🀀", "🀁🀁🀁", "🀄🀄🀄", "🀆🀆🀆", "🀃🀃" ],
+                    "explanation": "Triplets of East Wind, South Wind, Red Dragon, White Dragon, and a pair of North Wind"
+                },
+                {
+                    "tiles": [ "🀀🀀🀀", "🀂🀂🀂", "🀃🀃🀃", "🀅🀅🀅", "🀁🀁" ],
+                    "explanation": "Hand using only Wind and Dragon tiles with no suit tiles"
+                },
+                {
+                    "tiles": [ "🀀🀀🀀", "🀁🀁🀁", "🀂🀂🀂", "🀄🀄🀄", "🀆🀆" ],
+                    "explanation": "Three Wind triplets, one Dragon triplet, and a Dragon pair"
+                }
+            ]
+        }
+    ]
+}

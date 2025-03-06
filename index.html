@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singapore Mahjong Reference Library</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Singapore Mahjong Reference Library</h1>
+        <p class="subtitle">Complete Guide to Winning Combinations & Scoring</p>
+    </header>
+    
+    <div class="container">
+        <div class="intro">
+            <h2>Your Comprehensive Mahjong Reference</h2>
+            <p>This is a complete reference library for Singapore Mahjong winning combinations. Click on any combination to see all valid patterns that qualify for that particular win.</p>
+            <p>Tile legend: 🀇-🀏 (Characters), 🀐-🀘 (Bamboos), 🀙-🀡 (Dots), 🀀-🀃 (Winds: East, South, West, North), 🀄🀅🀆 (Dragons: Red, Green, White)</p>
+            
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search for combinations...">
+                <select id="filterSelect">
+                    <option value="all">All Categories</option>
+                    <option value="basic">Basic Wins (1-2 points)</option>
+                    <option value="medium">Medium Wins (3-6 points)</option>
+                    <option value="high">High Wins (8+ points)</option>
+                </select>
+                <span class="point-tracker">
+                    <label for="pointCalculator">Point Calculator:</label>
+                    <input type="number" id="pointCalculator" min="0" value="0" readonly>
+                    <button id="resetCalculator">Reset</button>
+                </span>
+            </div>
+        </div>
+        
+        <div id="combo-grid" class="combo-grid">
+            <!-- Cards will be dynamically loaded here -->
+        </div>
+        
+        <div class="priority-rules">
+            <h2>Winning Priority Rules (胡牌优先规则)</h2>
+            
+            <div class="rule-section">
+                <h3>1️⃣ Priority of Who Wins</h3>
+                <ul class="rule-list">
+                    <li><span class="highlighted">Self-draw (自摸, Zìmō)</span> has the highest priority – If a player wins by self-drawing a tile, no one else can claim it.</li>
+                    <li><span class="highlighted">Robbing a Kong (抢杠胡, Qiǎnggànghú)</span> takes priority over a normal discard – If a player wins by robbing a Kong, they override anyone who would have won from a discard.</li>
+                    <li><span class="highlighted">Single Winner Rule (头家优先, Tóujiā Yōuxiān)</span> – If two or more players can claim a discard for a win, the player closest to the discarder in turn order (right of the discarder) gets the tile.</li>
+                    <li><span class="highlighted">Thirteen Orphans (十三幺, Shísān Yāo)</span> always overrides other hands – If someone is waiting for the final tile to complete Thirteen Orphans, they get the tile even if another player can win.</li>
+                </ul>
+            </div>
+            
+            <div class="rule-section">
+                <h3>2️⃣ Payout Rules</h3>
+                <ul class="rule-list">
+                    <li>If a player <span class="highlighted">self-draws (自摸)</span>, all three opponents pay the full amount.</li>
+                    <li>If a player wins from <span class="highlighted">a discard (放炮, Fàngpào)</span>, the discarder pays the full amount.</li>
+                    <li>If <span class="highlighted">a player robs a Kong (抢杠胡)</span>, the player who declared the Kong pays for all.</li>
+                    <li>If the dealer wins, the payout <span class="highlighted">doubles</span>.</li>
+                </ul>
+            </div>
+            
+            <div class="rule-section">
+                <h3>3️⃣ Special Considerations</h3>
+                <ul class="rule-list">
+                    <li><span class="highlighted">Heavenly Hand (天胡, Tiānhú)</span> – If the dealer wins immediately with their first tile, they win double points.</li>
+                    <li><span class="highlighted">Earthly Hand (地胡, Dìhú)</span> – If a non-dealer wins immediately after the dealer discards their first tile, they win double points.</li>
+                    <li><span class="highlighted">Big Wins (大牌)</span> – Hands such as Big Winds (大四喜), Big Dragon (大三元), Four Kongs (四杠子), and All Honors (字一色) take precedence if multiple players could win.</li>
+                    <li><span class="highlighted">Limit Hands (封顶牌)</span> – Some house rules may cap points at a certain limit (e.g., 32 points max).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for displaying examples -->
+    <div id="examplesModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <div id="modalChineseName" class="modal-chinese-name"></div>
+                <div id="modalPoints" class="modal-points"></div>
+                <button id="addToCalculator" class="add-points-btn">Add to Calculator</button>
+            </div>
+            <p id="modalDescription" class="modal-description"></p>
+            
+            <div class="modal-tabs">
+                <button class="tab-btn active" data-tab="all">All Patterns</button>
+                <button class="tab-btn" data-tab="combinations">Pattern Structure</button>
+                <button class="tab-btn" data-tab="tips">Recognition Tips</button>
+            </div>
+            
+            <div id="examplesContainer" class="examples-container tab-content active" data-tab="all">
+                <!-- Examples will be loaded here -->
+            </div>
+            
+            <div id="combinationsContainer" class="tab-content" data-tab="combinations">
+                <div class="pattern-structure">
+                    <h3>Valid Pattern Structures</h3>
+                    <div id="patternStructures">
+                        <!-- Pattern structures will be added here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div id="tipsContainer" class="tab-content" data-tab="tips">
+                <div class="recognition-tips">
+                    <h3>How to Recognize This Pattern</h3>
+                    <ul id="tipsList">
+                        <!-- Tips will be added here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Singapore Mahjong Reference Library - Comprehensive Guide to Winning Patterns</p>
+    </footer>
+
+    <script>
+        // Tips and patterns for each combination type
+        const extraInfo = {
+            "Basic Winning Hand": {
+                patterns: [
+                    "4 sets + 1 pair = 14 tiles total",
+                    "Sets can be any combination of triplets (3 identical tiles) and sequences (3 consecutive tiles of the same suit)",
+                    "The pair must be 2 identical tiles"
+                ],
+                tips: [
+                    "This is the fundamental pattern required for any winning hand",
+                    "Other winning combinations give you extra points on top of this basic structure",
+                    "Remember that a Kong (4 identical tiles) counts as one set"
+                ]
+            },
+            "Self-draw": {
+                patterns: [
+                    "Any valid winning hand where the final tile is drawn by yourself",
+                    "Cannot be claimed from another player's discard"
+                ],
+                tips: [
+                    "Self-draw has priority over all other claims",
+                    "All three opponents must pay you if you win by self-draw",
+                    "Can be combined with other winning patterns for additional points"
+                ]
+            },
+            "Winning on Last Tile": {
+                patterns: [
+                    "Any valid winning hand where the final tile is the very last tile in the wall",
+                    "Can be either drawn by yourself or claimed from another player's discard"
+                ],
+                tips: [
+                    "Keep track of how many tiles are left in the wall",
+                    "The last tile is sometimes called the 'dead wall' tile",
+                    "Can be combined with self-draw for additional points"
+                ]
+            },
+            "Robbing a Kong": {
+                patterns: [
+                    "Winning by claiming a tile that another player is using to complete a Kong",
+                    "The claimed Kong must be an exposed Kong (where the player already has a revealed triplet)"
+                ],
+                tips: [
+                    "You can only rob a Kong if it completes your winning hand",
+                    "Has priority over regular discards but not over self-draw",
+                    "The player declaring the Kong pays for all players if you win"
+                ]
+            },
+            "Flower/Season": {
+                patterns: [
+                    "Any flower or season tile gives you 1 extra point",
+                    "These are bonus tiles that don't form part of your main hand"
+                ],
+                tips: [
+                    "Flower and season tiles are drawn and set aside immediately",
+                    "You draw a replacement tile for each flower/season",
+                    "Count these at the end for extra points"
+                ]
+            },
+            "Seat Flower/Season": {
+                patterns: [
+                    "Flower or season tile that matches your seat position",
+                    "East seat matches flower/season 1, South matches 2, West matches 3, North matches 4"
+                ],
+                tips: [
+                    "Worth 2 points instead of the usual 1 point",
+                    "Check the number on the flower/season tile against your seat position",
+                    "The starting dealer is always East (position 1)"
+                ]
+            },
+            "Half Flush": {
+                patterns: [
+                    "All tiles from one suit plus honor tiles",
+                    "Can include any mix of one suit (Characters, Bamboo, or Dots) with Winds and/or Dragons"
+                ],
+                tips: [
+                    "Easier to achieve than Full Flush",
+                    "Watch for opportunities to collect a single suit early in the game",
+                    "Honor tiles can help complete sets when you're missing suited tiles"
+                ]
+            },
+            "Full Flush": {
+                patterns: [
+                    "All tiles from a single suit only",
+                    "No honor tiles (Winds or Dragons) allowed",
+                    "Can be made with any one suit: Characters, Bamboo, or Dots"
+                ],
+                tips: [
+                    "Worth double the points of Half Flush",
+                    "Harder to complete because you're limited to just 9 different tiles",
+                    "Start collecting a single suit from the beginning of the game"
+                ]
+            },
+            "All Triplets": {
+                patterns: [
+                    "Four sets that are all triplets or kongs (no sequences)",
+                    "Plus one pair",
+                    "Can be made with any combination of suits and honor tiles"
+                ],
+                tips: [
+                    "Also known as 'All Pungs'",
+                    "Focus on collecting pairs that can be developed into triplets",
+                    "Claiming revealed triplets can help complete this hand faster"
+                ]
+            },
+            "Mixed Terminals": {
+                patterns: [
+                    "Hand contains combinations of 1s, 9s, and honor tiles",
+                    "Can include other number tiles as well",
+                    "Must have at least one set of terminal tiles (1s or 9s)"
+                ],
+                tips: [
+                    "Look for opportunities to collect terminal tiles throughout the game",
+                    "Can be combined with All Triplets for a stronger hand",
+                    "Honor tiles pair well with this strategy"
+                ]
+            },
+            "All Terminals and Honors": {
+                patterns: [
+                    "Every tile in the hand is either a 1, 9, or honor tile",
+                    "No middle number tiles (2-8) allowed"
+                ],
+                tips: [
+                    "Worth double the points of Mixed Terminals",
+                    "Very difficult to complete as you're limited to just 16 different tiles",
+                    "Often results in slower hand development"
+                ]
+            },
+            "Little Dragon": {
+                patterns: [
+                    "Two triplets/kongs of dragon tiles",
+                    "Plus a pair of the third dragon type",
+                    "The remaining sets can be anything"
+                ],
+                tips: [
+                    "Focus on collecting all three types of dragon tiles",
+                    "Red Dragon (🀄), Green Dragon (🀅), and White Dragon (🀆)",
+                    "Often easier to achieve than Big Dragon"
+                ]
+            },
+            "Big Dragon": {
+                patterns: [
+                    "Triplets/kongs of all three types of dragon tiles",
+                    "The remaining set and pair can be anything"
+                ],
+                tips: [
+                    "Worth double the points of Little Dragon",
+                    "Very difficult as you need to collect all three dragon types in sets of three",
+                    "Dragons are often popular tiles so expect competition"
+                ]
+            },
+            "Small Winds": {
+                patterns: [
+                    "Three triplets/kongs of wind tiles",
+                    "Plus a pair of the fourth wind type",
+                    "The remaining set can be anything"
+                ],
+                tips: [
+                    "Focus on collecting all four types of wind tiles",
+                    "East Wind (🀀), South Wind (🀁), West Wind (🀂), and North Wind (🀃)",
+                    "Seat winds or prevalent winds are easier to collect"
+                ]
+            },
+            "Big Winds": {
+                patterns: [
+                    "Triplets/kongs of all four types of wind tiles",
+                    "The remaining pair can be anything"
+                ],
+                tips: [
+                    "One of the highest scoring hands in the game",
+                    "Extremely difficult to complete",
+                    "Winds are often popular tiles so expect competition"
+                ]
+            },
+            "Four Kongs": {
+                patterns: [
+                    "Four kongs (sets of 4 identical tiles)",
+                    "Plus any pair",
+                    "Kongs can be exposed or concealed"
+                ],
+                tips: [
+                    "One of the highest scoring hands in the game",
+                    "You need a total of 18 tiles in your hand due to the extra tiles from kongs",
+                    "Remember to declare your kongs to draw replacement tiles"
+                ]
+            },
+            "Thirteen Orphans": {
+                patterns: [
+                    "One of each of: 1 and 9 of each suit, all four winds, all three dragons",
+                    "Plus a duplicate of any one of these tiles",
+                    "Exactly 14 tiles with a very specific structure"
+                ],
+                tips: [
+                    "A completely different pattern from the usual '4 sets + 1 pair' structure",
+                    "Has special claiming priority in many rule sets",
+                    "Focus on collecting single terminals and honors, avoid pairs (except one)"
+                ]
+            },
+            "Heavenly Hand": {
+                patterns: [
+                    "The dealer's initial 13 tiles plus first draw form a complete winning hand",
+                    "Must be achieved without any discards"
+                ],
+                tips: [
+                    "Extremely rare and lucky - impossible to plan for",
+                    "The dealer must win on their very first turn",
+                    "Often gets double points in many rule sets"
+                ]
+            },
+            "Earthly Hand": {
+                patterns: [
+                    "A non-dealer wins with their initial 13 tiles plus the dealer's first discard",
+                    "Must be achieved on the very first discard of the game"
+                ],
+                tips: [
+                    "Extremely rare and lucky - impossible to plan for",
+                    "Must win on the very first discard of the game",
+                    "Often gets double points in many rule sets"
+                ]
+            },
+            "Fully Concealed Hand": {
+                patterns: [
+                    "Winning with a hand where all sets are concealed (no claimed tiles)",
+                    "Must be won with a self-drawn tile",
+                    "Regular '4 sets + 1 pair' structure but all concealed"
+                ],
+                tips: [
+                    "Keep your hand completely concealed throughout the game",
+                    "Patient strategy that can be combined with other patterns",
+                    "Avoid the temptation to claim exposed sets"
+                ]
+            },
+            "Quadruple Concealed Triplets": {
+                patterns: [
+                    "Four concealed triplets/kongs (no claimed sets)",
+                    "Plus any pair",
+                    "All triplets must be formed without claiming"
+                ],
+                tips: [
+                    "Very difficult hand that requires patience",
+                    "Can be combined with Fully Concealed Hand for more points",
+                    "Look for opportunities to build multiple pairs into triplets"
+                ]
+            },
+            "All Honors": {
+                patterns: [
+                    "Every tile in the hand is an honor tile (winds or dragons)",
+                    "No suit tiles allowed",
+                    "Regular '4 sets + 1 pair' structure"
+                ],
+                tips: [
+                    "Limited to just 7 different tile types",
+                    "Often difficult as many players need some honor tiles",
+                    "Watch your opponents' discards carefully to assess feasibility"
+                ]
+            }
+        };
+        
+        // Load the JSON data and populate the cards
+        document.addEventListener('DOMContentLoaded', function() {
+            let totalPoints = 0;
+            const pointCalculator = document.getElementById('pointCalculator');
+            const resetCalculator = document.getElementById('resetCalculator');
+            const searchInput = document.getElementById('searchInput');
+            const filterSelect = document.getElementById('filterSelect');
+            
+            // Fetch the JSON data
+            fetch('mahjong-combinations.json')
+                .then(response => response.json())
+                .then(data => {
+                    // Store the data for filtering
+                    window.combinationsData = data.winningCombinations;
+                    
+                    // Populate the grid with cards
+                    populateGrid(window.combinationsData);
+                    
+                    // Set up event listeners for the cards
+                    setupCardListeners();
+                    
+                    // Set up search and filter functionality
+                    setupSearch();
+                })
+                .catch(error => {
+                    console.error('Error loading the JSON data:', error);
+                    document.getElementById('combo-grid').innerHTML = 
+                        '<div class="error-message">Error loading winning combinations. Please check the console for details.</div>';
+                });
+                
+            // Point calculator functionality
+            resetCalculator.addEventListener('click', function() {
+                totalPoints = 0;
+                pointCalculator.value = totalPoints;
+            });
+            
+            // Handle adding points from modal
+            document.getElementById('addToCalculator').addEventListener('click', function() {
+                const pointsText = document.getElementById('modalPoints').textContent;
+                let points = parseInt(pointsText);
+                
+                if (isNaN(points)) {
+                    // Handle special cases like "1 per tile"
+                    if (pointsText.includes('per tile')) {
+                        points = 1; // Default to 1 point
+                    } else {
+                        points = 0;
+                    }
+                }
+                
+                totalPoints += points;
+                pointCalculator.value = totalPoints;
+            });
+            
+            // Set up modal tabs
+            document.querySelectorAll('.tab-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons and content
+                    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    this.classList.add('active');
+                    const tabName = this.getAttribute('data-tab');
+                    document.querySelector(`.tab-content[data-tab="${tabName}"]`).classList.add('active');
+                });
+            });
+        });
+        
+        // Populate grid with cards
+        function populateGrid(combinations) {
+            const comboGrid = document.getElementById('combo-grid');
+            comboGrid.innerHTML = '';
+            
+            combinations.forEach(combo => {
+                createComboCard(combo, comboGrid);
+            });
+        }
+        
+        // Set up search and filter functionality
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const filterSelect = document.getElementById('filterSelect');
+            
+            searchInput.addEventListener('input', filterCombinations);
+            filterSelect.addEventListener('change', filterCombinations);
+            
+            function filterCombinations() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const filterValue = filterSelect.value;
+                
+                let filtered = window.combinationsData.filter(combo => {
+                    // Search term filter
+                    const matchesSearch = 
+                        combo.name.toLowerCase().includes(searchTerm) || 
+                        combo.chineseName.toLowerCase().includes(searchTerm) ||
+                        combo.description.toLowerCase().includes(searchTerm);
+                    
+                    // Category filter
+                    let matchesCategory = true;
+                    if (filterValue !== 'all') {
+                        const points = typeof combo.points === 'string' ? 
+                            parseInt(combo.points.split(' ')[0]) : combo.points;
+                        
+                        if (filterValue === 'basic' && points > 2) matchesCategory = false;
+                        if (filterValue === 'medium' && (points < 3 || points > 6)) matchesCategory = false;
+                        if (filterValue === 'high' && points < 8) matchesCategory = false;
+                    }
+                    
+                    return matchesSearch && matchesCategory;
+                });
+                
+                populateGrid(filtered);
+                setupCardListeners();
+            }
+        }
+        
+        // Create a combo card from the JSON data
+        function createComboCard(combo, container) {
+            const card = document.createElement('div');
+            card.className = 'combo-card';
+            card.dataset.combo = JSON.stringify(combo);
+            
+            card.innerHTML = `
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>${combo.name}</span>
+                        <span class="points">${combo.points} ${typeof combo.points === 'string' && combo.points.includes('per') ? '' : 'Point' + (combo.points > 1 ? 's' : '')}</span>
+                    </div>
+                    <div class="chinese-name">${combo.chineseName} (${combo.pronunciation})</div>
+                </div>
+                <div class="card-body">
+                    <div class="tiles-container">
+                        ${renderTiles(combo.examples[0])}
+                    </div>
+                    <div class="description">${combo.description}</div>
+                    <div class="view-more">Click to see all valid patterns</div>
+                </div>
+            `;
+            
+            container.appendChild(card);
+        }
+        
+        // Render tiles for a given example
+        function renderTiles(example) {
+            let html = '';
+            
+            // Regular tiles
+            if (example.tiles) {
+                example.tiles.forEach((tileSet, index) => {
+                    html += `<span class="tile">${tileSet}</span>`;
+                    if (index < example.tiles.length - 1) {
+                        html += '<span class="set-divider"></span>';
+                    }
+                });
+            }
+            
+            // Winning tile if present
+            if (example.winningTile) {
+                html += '<span class="set-divider"></span>';
+                html += `<span class="tile">+ <span class="special-marker">${example.winningTile}</span></span>`;
+            }
+            
+            // Bonus tiles if present
+            if (example.bonusTiles) {
+                html += '<span class="set-divider"></span>';
+                example.bonusTiles.forEach(tile => {
+                    html += `<span class="special-marker">${tile}</span> `;
+                });
+            }
+            
+            return html;
+        }
+        
+        // Set up event listeners for the combo cards
+        function setupCardListeners() {
+            const cards = document.querySelectorAll('.combo-card');
+            const modal = document.getElementById('examplesModal');
+            const closeButton = document.querySelector('.close-button');
+            
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const combo = JSON.parse(this.dataset.combo);
+                    openModal(combo);
+                });
+            });
+            
+            closeButton.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+        
+        // Open the modal with the selected combination
+        function openModal(combo) {
+            const modal = document.getElementById('examplesModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalChineseName = document.getElementById('modalChineseName');
+            const modalPoints = document.getElementById('modalPoints');
+            const modalDescription = document.getElementById('modalDescription');
+            const examplesContainer = document.getElementById('examplesContainer');
+            const patternStructures = document.getElementById('patternStructures');
+            const tipsList = document.getElementById('tipsList');
+            
+            // Set modal content
+            modalTitle.textContent = combo.name;
+            modalChineseName.textContent = `${combo.chineseName} (${combo.pronunciation})`;
+            modalPoints.textContent = `${combo.points} ${typeof combo.points === 'string' && combo.points.includes('per') ? '' : 'Point' + (combo.points > 1 ? 's' : '')}`;
+            modalDescription.textContent = combo.description;
+            
+            // Clear previous content
+            examplesContainer.innerHTML = '';
+            patternStructures.innerHTML = '';
+            tipsList.innerHTML = '';
+            
+            // Add all examples
+            combo.examples.forEach((example, index) => {
+                const exampleEl = document.createElement('div');
+                exampleEl.className = 'example-item';
+                
+                exampleEl.innerHTML = `
+                    <h3>Pattern ${index + 1}</h3>
+                    <div class="tiles-container">
+                        ${renderTiles(example)}
+                    </div>
+                    <p class="example-explanation">${example.explanation}</p>
+                `;
+                
+                examplesContainer.appendChild(exampleEl);
+            });
+            
+            // Add pattern structures and tips if available
+            if (extraInfo[combo.name]) {
+                // Add pattern structures
+                if (extraInfo[combo.name].patterns) {
+                    const patternList = document.createElement('ul');
+                    extraInfo[combo.name].patterns.forEach(pattern => {
+                        const li = document.createElement('li');
+                        li.textContent = pattern;
+                        patternList.appendChild(li);
+                    });
+                    patternStructures.appendChild(patternList);
+                }
+                
+                // Add tips
+                if (extraInfo[combo.name].tips) {
+                    extraInfo[combo.name].tips.forEach(tip => {
+                        const li = document.createElement('li');
+                        li.textContent = tip;
+                        tipsList.appendChild(li);
+                    });
+                }
+            }
+            
+            // Reset active tab
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.querySelector('.tab-btn[data-tab="all"]').classList.add('active');
+            document.querySelector('.tab-content[data-tab="all"]').classList.add('active');
+            
+            // Show the modal
+            modal.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

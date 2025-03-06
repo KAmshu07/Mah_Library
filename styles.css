@@ -1,0 +1,467 @@
+:root {
+    --primary: #8b0000;
+    --secondary: #f8f1e5;
+    --accent: #eac696;
+    --text: #333;
+    --light-bg: #f9f5eb;
+    --highlight: #f0d1a0;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-bg);
+    color: var(--text);
+}
+
+header {
+    background-color: var(--primary);
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.subtitle {
+    font-style: italic;
+    margin-top: 0.5rem;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.intro {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 1.5rem;
+    align-items: center;
+}
+
+#searchInput {
+    flex: 1;
+    min-width: 200px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+#filterSelect {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 16px;
+}
+
+.point-tracker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    background-color: var(--highlight);
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+#pointCalculator {
+    width: 60px;
+    text-align: center;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+#resetCalculator {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.combo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.combo-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    cursor: pointer;
+}
+
+.combo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background-color: var(--primary);
+    color: white;
+    padding: 1rem;
+    position: relative;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.points {
+    background-color: var(--accent);
+    color: var(--text);
+    font-weight: bold;
+    padding: 0.3rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.chinese-name {
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+    opacity: 0.9;
+}
+
+.tiles-container {
+    background-color: var(--secondary);
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 1rem 0;
+    min-height: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.description {
+    font-size: 0.95rem;
+    color: #555;
+    margin-top: 1rem;
+}
+
+.tile {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.set-divider {
+    width: 2px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin: 0 8px;
+}
+
+.special-marker {
+    display: inline-block;
+    background-color: #ffecb3;
+    border: 1px dashed #e6ac00;
+    padding: 0 5px;
+    border-radius: 3px;
+    margin: 0 3px;
+    font-size: 0.9em;
+}
+
+.priority-rules {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.priority-rules h2 {
+    color: var(--primary);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.5rem;
+}
+
+.rule-section {
+    margin-bottom: 1.5rem;
+}
+
+.rule-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.rule-list {
+    padding-left: 1.5rem;
+}
+
+.rule-list li {
+    margin-bottom: 0.5rem;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: #333;
+    color: white;
+    margin-top: 2rem;
+}
+
+.highlighted {
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.view-more {
+    color: var(--primary);
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 2% auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 1000px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.modal-header {
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.modal-chinese-name {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    color: #666;
+}
+
+.modal-points {
+    position: absolute;
+    top: 0;
+    right: 40px;
+    background-color: var(--accent);
+    color: var(--text);
+    font-weight: bold;
+    padding: 0.3rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.add-points-btn {
+    position: absolute;
+    top: 0;
+    right: 120px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.modal-description {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.modal-tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-btn {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: #666;
+}
+
+.tab-btn.active {
+    background-color: var(--primary);
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.examples-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.example-item {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.example-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.example-item h3 {
+    color: var(--primary);
+    margin-top: 0;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+}
+
+.example-explanation {
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.error-message {
+    color: var(--primary);
+    font-weight: bold;
+    text-align: center;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pattern-structure, .recognition-tips {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pattern-structure h3, .recognition-tips h3 {
+    color: var(--primary);
+    margin-top: 0;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.pattern-structure ul, .recognition-tips ul {
+    padding-left: 1.5rem;
+}
+
+.pattern-structure li, .recognition-tips li {
+    margin-bottom: 0.7rem;
+}
+
+@media (max-width: 768px) {
+    .combo-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    .examples-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .point-tracker {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .modal-points {
+        position: static;
+        display: inline-block;
+        margin-top: 10px;
+    }
+    
+    .add-points-btn {
+        position: static;
+        display: block;
+        margin-top: 10px;
+        width: 100%;
+    }
+    
+    .modal-tabs {
+        flex-wrap: wrap;
+    }
+}
